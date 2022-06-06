@@ -1,0 +1,75 @@
+Scuba-machine Pattern Analyzer
+(Deadline : EOD)
+
+Using the shiny AI-like system Syntaxtic, you tried asking the best route to get out of an underground cave deep beneath the sea.
+
+The humanoid voice only replied : pattern error on all lines!
+
+All of them?! The damage is worse than you thought. You bring up a copy of Syntaxtic core processing code  (your program input).
+
+The codes is made of several lines containing "groupees" or simply group of codes. There are one or more "groupees" on each line, and "groupees" contain zero or more other "groupees". Adjacent "groupees" are not separated by any delimiter; if one "groupees" stops, the next "groupees" (if any) can immediately start. Every "groupees" must open and close with one of four legal pairs of matching characters:
+
+If a groupees :
+- opens with (, it must close with ).
+- opens with [, it must close with ].
+- opens with {, it must close with }.
+- opens with <, it must close with >.
+
+So, () is a legal "groupees" that contains no other "groupees", as is []. More complex but valid "groupees" include 
+- ([])
+- {()()()}
+- <([{}])>
+- [<>({}){}[([])<>]]
+- and even (((((((((())))))))))
+
+Some lines are incomplete, but others are corrupted. Find and discard the corrupted lines first.
+
+A corrupted line is one where a "groupee" closes with the wrong character - that is, where the characters it opens and closes with do not match one of the four  pairs listed above.
+
+Examples of corrupted "groupees" include 
+- (]
+- {()()()>
+- (((()))}
+-  and <([]){()}[{}]) 
+
+Such a "groupee" can appear anywhere within a line, and its presence causes the whole line to be considered corrupted.
+
+For example, consider the following navigation subsystem:
+
+[({(<(())[]>[[{[]{<()<>>
+[(()[<>])]({[<{<<[]>>(
+{([(<{}[<>[]}>{[]{[(<()>
+(((({<>}<{<{<>}{[]{[]{}
+[[<[([]))<([[{}[[()]]]
+[{[{({}]{}}([{[{{{}}([]
+{<[[]]>}<{[{[{[]{()[[[]
+[<(<(<(<{}))><([]([]()
+<{([([[(<>()){}]>(<<{{
+<{([{{}}[<[[[<>{}]]]>[]]
+
+Some of the lines aren't corrupted, just incomplete; you can ignore these lines for now. The remaining five lines are corrupted:
+
+{([(<{}[<>[]}>{[]{[(<()> - Expected ], but found } instead.
+[[<[([]))<([[{}[[()]]] - Expected ], but found ) instead.
+[{[{({}]{}}([{[{{{}}([] - Expected ), but found ] instead.
+[<(<(<(<{}))><([]([]() - Expected >, but found ) instead.
+<{([([[(<>()){}]>(<<{{ - Expected ], but found > instead.
+
+Stop at the first incorrect closing character on each corrupted line.
+
+Syntaxtic pattern analyzers uses scores to determine the severity of the error. To calculate the syntax error score for a line, take the first illegal character on the line and look it up in the following table:
+
+): 3 points.
+]: 57 points.
+}: 1197 points.
+>: 25137 points.
+
+In the above example, an illegal ) was found twice (2*3 = 6 points), 
+an illegal ] was found once (57 points), 
+an illegal } was found once (1197 points), 
+and an illegal > was found once (25137 points). 
+So, the total Sytaxtic error score for this file is 6+57+1197+25137 = 26397 points!
+
+Create a program that will read the Syntaxtic code from a file that is to be passed as a commandline argument. Process each line and first illegal character in each corrupted line. Add all Syntaxtic score and print it out in the screen.
+
+Regards,
